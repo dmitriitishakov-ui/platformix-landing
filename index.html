@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlatformixNew — Системный интегратор</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0B1E3D;
+    --accent: #1A6EF2;
+    --accent2: #00C8A0;
+    --light: #F4F7FB;
+    --text: #1C2B3A;
+    --muted: #6B7E93;
+    --border: #DDE3EE;
+    --card-bg: #fff;
+    --header-h: 72px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Manrope', sans-serif;
+    color: var(--text);
+    background: #fff;
+    line-height: 1.65;
+  }
+
+  /* ───── HEADER ───── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--primary);
+    height: var(--header-h);
+    display: flex; align-items: center;
+    box-shadow: 0 2px 24px rgba(11,30,61,.25);
+  }
+  .header-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 32px;
+    width: 100%;
+    display: flex; align-items: center; gap: 48px;
+  }
+  .logo {
+    font-size: 22px; font-weight: 800; color: #fff; text-decoration: none;
+    letter-spacing: -0.5px; white-space: nowrap;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo span { color: var(--accent2); }
+  .logo-dot {
+    width: 8px; height: 8px; background: var(--accent2);
+    border-radius: 50%; flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); opacity:1; }
+    50% { transform: scale(1.6); opacity:.5; }
+  }
+  nav { display: flex; gap: 0; margin-left: auto; }
+  nav a {
+    color: rgba(255,255,255,.75); text-decoration: none;
+    font-size: 14px; font-weight: 500; letter-spacing: .3px;
+    padding: 0 18px; height: var(--header-h); display: flex; align-items: center;
+    transition: color .2s, background .2s;
+    border-bottom: 3px solid transparent;
+  }
+  nav a:hover { color: #fff; background: rgba(255,255,255,.06); border-bottom-color: var(--accent2); }
+  .btn-contact {
+    margin-left: 16px;
+    background: var(--accent); color: #fff; border: none;
+    padding: 10px 22px; border-radius: 6px; font-family: inherit;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: background .2s, transform .15s;
+    white-space: nowrap;
+  }
+  .btn-contact:hover { background: #1558d4; transform: translateY(-1px); }
+
+  /* ───── HERO SERVICES GRID ───── */
+  .services-grid-section {
+    background: var(--light);
+    padding: 64px 0 72px;
+  }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; color: var(--primary);
+    margin-bottom: 40px; line-height: 1.2;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .service-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(11,30,61,.07);
+    transition: transform .25s, box-shadow .25s;
+    cursor: pointer;
+    text-decoration: none; color: inherit;
+    display: block;
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(26,110,242,.18);
+  }
+  .service-card img {
+    width: 100%; height: 170px; object-fit: cover;
+    display: block;
+  }
+  .service-card-body { padding: 18px 20px 22px; }
+  .service-card h3 {
+    font-size: 15px; font-weight: 700; color: var(--primary);
+    margin-bottom: 8px; line-height: 1.3;
+  }
+  .service-card p {
+    font-size: 12.5px; color: var(--muted); line-height: 1.6;
+  }
+  .service-card-body .tag {
+    display: inline-block; margin-top: 14px;
+    font-size: 11px; font-weight: 600; letter-spacing: .5px;
+    color: var(--accent); text-transform: uppercase;
+  }
+  .service-card-body .tag::after { content: ' →'; }
+
+  /* ───── ABOUT ───── */
+  .about-section {
+    padding: 80px 0;
+    background: var(--primary);
+    color: #fff;
+    position: relative; overflow: hidden;
+  }
+  .about-section::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(26,110,242,.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .about-tagline {
+    font-size: 44px; font-weight: 800; line-height: 1.15;
+    margin-bottom: 24px; color: #fff;
+  }
+  .about-tagline span { color: var(--accent2); }
+  .about-desc { font-size: 16px; color: rgba(255,255,255,.7); line-height: 1.75; }
+  .about-year {
+    font-size: 120px; font-weight: 800;
+    color: rgba(255,255,255,.06); line-height: 1;
+    position: absolute; right: 5%; bottom: 10%;
+    pointer-events: none; user-select: none;
+    font-family: 'Playfair Display', serif;
+  }
+  .about-badge {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 12px; padding: 28px 32px; margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+  .about-badge h4 { font-size: 14px; color: var(--accent2); font-weight: 700; margin-bottom: 6px; letter-spacing: .5px; }
+  .about-badge p { font-size: 14px; color: rgba(255,255,255,.65); }
+
+  /* ───── ADVANTAGES ───── */
+  .advantages-section { padding: 80px 0; background: #fff; }
+  .adv-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 48px; }
+  .adv-card {
+    background: var(--light);
+    border-radius: 12px; padding: 32px 28px;
+    border-top: 3px solid var(--accent);
+    transition: transform .2s;
+  }
+  .adv-card:hover { transform: translateY(-3px); }
+  .adv-icon {
+    width: 48px; height: 48px; border-radius: 10px;
+    background: var(--primary); display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 18px;
+  }
+  .adv-card h3 { font-size: 15px; font-weight: 700; color: var(--primary); line-height: 1.4; }
+
+  /* ───── EXTRA SERVICES ───── */
+  .extra-section { padding: 80px 0; background: var(--light); }
+  .extra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+  .extra-card {
+    background: var(--card-bg); border-radius: 14px;
+    overflow: hidden; box-shadow: 0 2px 20px rgba(11,30,61,.06);
+    transition: transform .25s, box-shadow .25s;
+    text-decoration: none; color: inherit;
+    display: block;
+  }
+  .extra-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,110,242,.15); }
+  .extra-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+  .extra-card-body { padding: 24px 28px; }
+  .extra-card-body h3 { font-size: 17px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+  .extra-card-body p { font-size: 13.5px; color: var(--muted); }
+
+  /* ───── STATS ───── */
+  .stats-section { padding: 80px 0; background: var(--primary); color: #fff; }
+  .stats-tabs { display: flex; gap: 0; margin-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.12); }
+  .stats-tab {
+    padding: 12px 28px; font-size: 14px; font-weight: 600; cursor: pointer;
+    color: rgba(255,255,255,.45); border-bottom: 2px solid transparent;
+    margin-bottom: -1px; transition: color .2s, border-color .2s;
+  }
+  .stats-tab.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+  .stats-panel { display: none; }
+  .stats-panel.active { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-size: 52px; font-weight: 800; color: #fff;
+    line-height: 1; margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff, var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.5; }
+
+  /* ───── NEWS ───── */
+  .news-section { padding: 80px 0; background: #fff; }
+  .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 48px; }
+  .news-card {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--border);
+    transition: box-shadow .25s, transform .25s;
+    cursor: pointer;
+    text-decoration: none; color: inherit;
+    display: block;
+  }
+  .news-card:hover { box-shadow: 0 10px 40px rgba(11,30,61,.1); transform: translateY(-3px); }
+  .news-card img { width: 100%; height: 180px; object-fit: cover; display: block; }
+  .news-card-body { padding: 20px 22px 24px; }
+  .news-date { font-size: 12px; color: var(--muted); font-weight: 600; margin-bottom: 10px; letter-spacing: .5px; }
+  .news-card h3 { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 10px; line-height: 1.45; }
+  .news-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .btn-news {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 40px; padding: 14px 32px;
+    background: transparent; border: 2px solid var(--accent);
+    color: var(--accent); border-radius: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700;
+    cursor: pointer; text-decoration: none;
+    transition: background .2s, color .2s;
+  }
+  .btn-news:hover { background: var(--accent); color: #fff; }
+
+  /* ───── CLIENTS ───── */
+  .clients-section { padding: 60px 0; background: var(--light); overflow: hidden; }
+  .clients-title { text-align: center; margin-bottom: 36px; }
+  .clients-title h2 { font-size: 24px; font-weight: 700; color: var(--primary); }
+  .marquee-wrap { overflow: hidden; }
+  .marquee-track {
+    display: flex; gap: 48px; align-items: center;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .client-chip {
+    background: #fff; border-radius: 8px;
+    padding: 10px 22px; font-size: 13px; font-weight: 600;
+    color: var(--muted); white-space: nowrap;
+    border: 1px solid var(--border);
+    transition: color .2s, border-color .2s;
+  }
+  .client-chip:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ───── CTA + FORM ───── */
+  .cta-section { padding: 80px 0; background: var(--primary); }
+  .cta-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .cta-text h2 { font-size: 36px; font-weight: 800; color: #fff; margin-bottom: 16px; line-height: 1.25; }
+  .cta-text p { font-size: 16px; color: rgba(255,255,255,.6); }
+  .form-card {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 16px; padding: 36px 32px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 0; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,.5); margin-bottom: 6px; letter-spacing: .5px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 8px; padding: 12px 14px;
+    color: #fff; font-family: inherit; font-size: 14px;
+    outline: none; transition: border-color .2s;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,.25); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--accent2);
+  }
+  .form-group select { cursor: pointer; }
+  .form-group select option { background: var(--primary); }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .checkbox-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 20px; }
+  .checkbox-row input { width: 18px; height: 18px; margin-top: 1px; flex-shrink: 0; cursor: pointer; accent-color: var(--accent2); }
+  .checkbox-row label { font-size: 12.5px; color: rgba(255,255,255,.45); line-height: 1.5; cursor: pointer; }
+  .checkbox-row a { color: var(--accent2); }
+  .btn-submit {
+    width: 100%; padding: 15px; background: var(--accent2);
+    border: none; border-radius: 8px; color: var(--primary);
+    font-family: inherit; font-size: 15px; font-weight: 800;
+    cursor: pointer; transition: opacity .2s, transform .15s;
+    letter-spacing: .3px;
+  }
+  .btn-submit:hover { opacity: .88; transform: translateY(-1px); }
+
+  /* ───── FOOTER ───── */
+  footer { background: #060F1F; padding: 60px 0 36px; color: rgba(255,255,255,.5); }
+  .footer-grid { display: grid; grid-template-columns: 280px repeat(4, 1fr); gap: 40px; margin-bottom: 48px; }
+  .footer-brand .logo { margin-bottom: 14px; }
+  .footer-brand p { font-size: 13px; line-height: 1.65; margin-bottom: 16px; }
+  .footer-social a {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: rgba(255,255,255,.4); font-size: 13px; text-decoration: none;
+    transition: color .2s;
+  }
+  .footer-social a:hover { color: var(--accent2); }
+  .footer-col h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 16px; letter-spacing: .5px; }
+  .footer-col a {
+    display: block; font-size: 13px; color: rgba(255,255,255,.4);
+    text-decoration: none; margin-bottom: 8px; transition: color .2s;
+  }
+  .footer-col a:hover { color: #fff; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.07);
+    padding-top: 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px;
+  }
+  .footer-bottom a { color: rgba(255,255,255,.4); text-decoration: none; }
+  .footer-bottom a:hover { color: #fff; }
+
+  /* ───── COOKIE NOTICE ───── */
+  .cookie-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+    background: var(--primary); padding: 16px 32px;
+    display: flex; align-items: center; gap: 24px; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,.1);
+    font-size: 13px; color: rgba(255,255,255,.65);
+    transform: translateY(0); transition: transform .3s;
+  }
+  .cookie-bar.hidden { transform: translateY(100%); }
+  .cookie-bar a { color: var(--accent2); }
+  .btn-cookie {
+    flex-shrink: 0; background: var(--accent2); border: none;
+    color: var(--primary); padding: 9px 22px;
+    border-radius: 6px; font-family: inherit; font-size: 13px;
+    font-weight: 700; cursor: pointer;
+  }
+
+  /* ───── MOBILE MENU ───── */
+  .burger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .burger span { display: block; width: 22px; height: 2px; background: #fff; margin: 5px 0; border-radius: 2px; transition: .3s; }
+
+  /* ───── RESPONSIVE ───── */
+  @media (max-width: 1100px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .adv-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 800px) {
+    nav { display: none; }
+    .burger { display: block; margin-left: auto; }
+    .about-inner, .cta-inner { grid-template-columns: 1fr; gap: 40px; }
+    .about-year { display: none; }
+    .news-grid, .extra-grid { grid-template-columns: 1fr; }
+    .stats-panel.active { grid-template-columns: repeat(3, 1fr); }
+    .section-title { font-size: 28px; }
+    .about-tagline { font-size: 32px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  /* ───── SCROLL REVEAL ───── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .55s ease, transform .55s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-dot"></div>
+      Platformix<span>New</span>
+    </a>
+    <nav>
+      <a href="#news">Новости</a>
+      <a href="#services">ИТ-инфраструктура</a>
+      <a href="#extra">Услуги</a>
+      <a href="#about">О компании</a>
+    </nav>
+    <button class="btn-contact" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Оставить заявку</button>
+    <button class="burger" id="burgerBtn" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- SERVICES GRID -->
+<section class="services-grid-section" id="services">
+  <div class="container">
+    <div class="section-label">ИТ-инфраструктура</div>
+    <h2 class="section-title">Комплексные решения для вашего бизнеса</h2>
+    <div class="services-grid">
+
+      <a href="#" class="service-card reveal">
+        <img src="https://platformix.ru/usercontent/styles/550x367/public/vychislitelnye-platformy.jpg?itok=Fi74oZDu" alt="Вычислительные платформы" loading="lazy">
+        <div class="service-card-body">
+          <h3>Вычислительные платформы</h3>
+          <p>Создаём мощные ресурсы для корпоративных приложений с высокой производительностью, отказоустойчивостью и масштабируемостью.</p>
+          <span class="tag">Подробнее</span>
+        </div>
+      </a>
+
+      <a href="#" class="service-card reveal">
+        <img src="https://platformix.ru/usercontent/styles/550x367/public/shd_0.jpg?itok=HzaMqzQw" alt="Системы хранения данных" loading="lazy">
+        <div class="service-card-body">
+          <h3>Системы хранения данных</h3>
+          <p>Решаем весь спектр задач хранения структурированной информации — надёжно, безопасно и прозрачно.</p>
+          <span class="tag">Подробнее</span>
+        </div>
+      </a>
+
+      <a href="#" class="service-card reveal">
+        <img src="https://platformix.ru/usercontent/styles/550x367/public/seti-i-kommunikacii.jpg?itok=hTPQSwNt" alt="Сети и коммуникации" loading="lazy">
+        <div class="service-card-body">
+          <h3>Сети и коммуникации</h3>
+          <p>Объединяем филиалы, налаживаем связь с клиентами и партнёрами, реализуем все виды сетевых и коммуникационных решений.</p>
+          <span class="tag">Подробнее</span>
+        </div>
+      </a>
+
+      <a href="#" class="service-card reveal">
+        <img src="https://platformix.ru/usercontent/styles/550x367/public/upravlenie_it_infrastrukturoy.jpg?itok=jIY82d9u" alt="Управление ИТ-инфраструктурой" loading="lazy">
+        <div class="service-card-body">
+          <h3>Управление ИТ-инфраструктурой</h3>
+          <p>Оптимизируем расходы на ИТ-ресурсы, повышаем прозрачность владения инфраструктурой, проводим аудит и подбираем ПО.</p>
+          <span class="tag">Подробнее</span>
+        </div>
+      </a>
+
+      <a href="#" class="service-card reveal">
+        <img src="https://platformix.ru/usercontent/styles/550x367/public/inzhenernye-sistemy.jpg?itok=ugC4n79w" alt="Инженерные системы" loading="lazy">
+        <div class="service-card-body">
+          <h3>Инженерные системы</h3>
+          <p>Обеспечиваем надёжную работу инженерной инфраструктуры любого объекта — от базового электроснабжения до «интеллектуального здания».</p>
+          <span class="tag">Подробнее</span>
+        </div>
+      </a>
+
+      <a href="#" class="service-card reveal">
+        <img src="https://platformix.ru/usercontent/styles/550x367/public/ph_security_0.jpg?itok=6r4-JGV3" alt="Физическая безопасность" loading="lazy">
+        <div class="service-card-body">
+          <h3>Физическая безопасность</h3>
+          <p>Поставляем и внедряем системы видеонаблюдения, контроля доступа, защиты периметра и охраны труда.</p>
+          <span class="tag">Подробнее</span>
+        </div>
+      </a>
+
+      <a href="#" class="service-card reveal">
+        <img src="https://platformix.ru/usercontent/styles/550x367/public/ib_0.jpg?itok=5EUSYFNy" alt="Информационная безопасность" loading="lazy">
+        <div class="service-card-body">
+          <h3>Информационная безопасность</h3>
+          <p>Обеспечиваем защиту от периметра до рабочего места, от мобильного устройства до ядра системы.</p>
+          <span class="tag">Подробнее</span>
+        </div>
+      </a>
+
+      <a href="#" class="service-card reveal">
+        <img src="https://platformix.ru/usercontent/styles/550x367/public/ekspertiza-postavok.jpg?itok=CSheqv4K" alt="Экспертиза поставок" loading="lazy">
+        <div class="service-card-body">
+          <h3>Экспертиза поставок</h3>
+          <p>Реализуем технические решения любой сложности: налаженные отношения с производителями, собственные склады, широкая поддержка.</p>
+          <span class="tag">Подробнее</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div>
+        <div class="section-label" style="color:var(--accent2)">О компании</div>
+        <h2 class="about-tagline">Необходимо<br>и <span>достаточно</span></h2>
+        <p class="about-desc">
+          Системный интегратор PlatformixNew с 1992 года успешно помогает предприятиям из различных отраслей создавать надёжную платформу для ведения бизнеса. Наша экспертиза направлена на реализацию типовых решений с необходимым и достаточным набором параметров.
+        </p>
+      </div>
+      <div>
+        <div class="about-badge">
+          <h4>Основан</h4>
+          <p>С 1992 года на рынке системной интеграции — более 33 лет опыта и сотни реализованных проектов.</p>
+        </div>
+        <div class="about-badge">
+          <h4>Отраслевое покрытие</h4>
+          <p>Промышленность, финансы, ритейл, медиа, транспорт, здравоохранение и государственный сектор.</p>
+        </div>
+        <div class="about-badge">
+          <h4>Партнёрства</h4>
+          <p>Работаем с мировыми лидерами ИТ-рынка и сертифицированными вендорами уровня Enterprise.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="about-year">1992</div>
+</section>
+
+<!-- ADVANTAGES -->
+<section class="advantages-section" id="advantages">
+  <div class="container">
+    <div class="section-label">Почему мы</div>
+    <h2 class="section-title">Преимущества типовых решений</h2>
+    <div class="adv-grid">
+      <div class="adv-card reveal">
+        <div class="adv-icon">⚡</div>
+        <h3>Высокая проработанность и быстрое внедрение</h3>
+      </div>
+      <div class="adv-card reveal">
+        <div class="adv-icon">💰</div>
+        <h3>Низкая стоимость относительно индивидуальных разработок и прозрачный ROI</h3>
+      </div>
+      <div class="adv-card reveal">
+        <div class="adv-icon">🛡️</div>
+        <h3>Высокий уровень технической поддержки и сопровождения</h3>
+      </div>
+      <div class="adv-card reveal">
+        <div class="adv-icon">🔗</div>
+        <h3>Гарантированная интеграция решений между собой</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXTRA SERVICES -->
+<section class="extra-section" id="extra">
+  <div class="container">
+    <div class="section-label">Услуги</div>
+    <h2 class="section-title">Дополнительные возможности</h2>
+    <div class="extra-grid">
+      <a href="#" class="extra-card reveal">
+        <img src="https://platformix.ru/usercontent/kompleksnoe_obsluzhivanie1.jpg" alt="Комплексное обслуживание" loading="lazy">
+        <div class="extra-card-body">
+          <h3>Комплексное обслуживание</h3>
+          <p>Берём на себя полное сопровождение ИТ-инфраструктуры — от планирования до оперативного устранения инцидентов.</p>
+        </div>
+      </a>
+      <a href="#" class="extra-card reveal">
+        <img src="https://platformix.ru/usercontent/finansovye_uslugi1.jpg" alt="Финансовые услуги" loading="lazy">
+        <div class="extra-card-body">
+          <h3>Финансовые услуги</h3>
+          <p>Гибкие финансовые инструменты: лизинг, рассрочка, кредитование — для реализации проектов любого масштаба.</p>
+        </div>
+      </a>
+      <a href="#" class="extra-card reveal">
+        <img src="https://platformix.ru/usercontent/centr_ekspertizy1.jpg" alt="Центр экспертизы" loading="lazy">
+        <div class="extra-card-body">
+          <h3>Центр экспертизы</h3>
+          <p>Тестирование, демонстрация и отработка сценариев использования решений в условиях, приближённых к реальным.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="container">
+    <div class="section-label" style="color:var(--accent2)">Результаты работы</div>
+    <h2 class="section-title" style="color:#fff;margin-bottom:0">Что сделано</h2>
+    <div class="stats-tabs">
+      <div class="stats-tab active" onclick="showTab('apr',this)">Апрель 2026</div>
+      <div class="stats-tab" onclick="showTab('mar',this)">Март 2026</div>
+      <div class="stats-tab" onclick="showTab('feb',this)">Февраль 2026</div>
+    </div>
+
+    <div class="stats-panel active" id="tab-apr">
+      <div class="stat-item"><div class="stat-num">62</div><div class="stat-label">Обслужено заказчиков</div></div>
+      <div class="stat-item"><div class="stat-num">24 223</div><div class="stat-label">Инженерных человеко-часов</div></div>
+      <div class="stat-item"><div class="stat-num">714</div><div class="stat-label">Поставленных систем</div></div>
+      <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Субъектов РФ охвачено</div></div>
+      <div class="stat-item"><div class="stat-num">93</div><div class="stat-label">Производителей оборудования</div></div>
+    </div>
+
+    <div class="stats-panel" id="tab-mar">
+      <div class="stat-item"><div class="stat-num">65</div><div class="stat-label">Обслужено заказчиков</div></div>
+      <div class="stat-item"><div class="stat-num">18 690</div><div class="stat-label">Инженерных человеко-часов</div></div>
+      <div class="stat-item"><div class="stat-num">1 736</div><div class="stat-label">Поставленных систем</div></div>
+      <div class="stat-item"><div class="stat-num">10</div><div class="stat-label">Субъектов РФ охвачено</div></div>
+      <div class="stat-item"><div class="stat-num">112</div><div class="stat-label">Производителей оборудования</div></div>
+    </div>
+
+    <div class="stats-panel" id="tab-feb">
+      <div class="stat-item"><div class="stat-num">55</div><div class="stat-label">Обслужено заказчиков</div></div>
+      <div class="stat-item"><div class="stat-num">17 337</div><div class="stat-label">Инженерных человеко-часов</div></div>
+      <div class="stat-item"><div class="stat-num">1 807</div><div class="stat-label">Поставленных систем</div></div>
+      <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Субъектов РФ охвачено</div></div>
+      <div class="stat-item"><div class="stat-num">92</div><div class="stat-label">Производителей оборудования</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news-section" id="news">
+  <div class="container">
+    <div class="section-label">Последние события</div>
+    <h2 class="section-title">Новости компании</h2>
+    <div class="news-grid">
+
+      <a href="#" class="news-card reveal">
+        <img src="https://platformix.ru/usercontent/styles/280x188/public/demostendy_attestaciya.jpg?itok=ERy8IMsf" alt="Новость 1" loading="lazy">
+        <div class="news-card-body">
+          <div class="news-date">20 МАЯ 2026</div>
+          <h3>PlatformixNew прошёл аттестацию демостендов решений «Киберпротект»</h3>
+          <p>Аттестация подтверждает готовность стендов к отработке сценариев, приближённых к реальным, и свидетельствует о высоком уровне компетенций команды.</p>
+        </div>
+      </a>
+
+      <a href="#" class="news-card reveal">
+        <img src="https://platformix.ru/usercontent/styles/280x188/public/severstal.jpg?itok=JpHZv0Us" alt="Новость 2" loading="lazy">
+        <div class="news-card-body">
+          <div class="news-date">18 МАЯ 2026</div>
+          <h3>PlatformixNew спроектировал кластер для генеративного ИИ в «Северсталь»</h3>
+          <p>Созданы условия для работы с большими языковыми моделями и заложена основа для внедрения ИИ в бизнес-процессы компании.</p>
+        </div>
+      </a>
+
+      <a href="#" class="news-card reveal">
+        <img src="https://platformix.ru/usercontent/styles/280x188/public/1_7.jpg?itok=KJabxDSj" alt="Новость 3" loading="lazy">
+        <div class="news-card-body">
+          <div class="news-date">15 МАЯ 2026</div>
+          <h3>PlatformixNew расширил партнёрский статус UserGate до сервисного уровня</h3>
+          <p>Новый статус расширяет возможности по внедрению и сопровождению продуктов вендора, открывая дополнительные сервисные опции.</p>
+        </div>
+      </a>
+
+    </div>
+    <a href="#" class="btn-news">Читать все новости →</a>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section class="clients-section">
+  <div class="clients-title container">
+    <div class="section-label" style="text-align:center">Портфолио</div>
+    <h2>С нами работают</h2>
+  </div>
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marqueeTrack">
+      <div class="client-chip">A1</div>
+      <div class="client-chip">Аэроэкспресс</div>
+      <div class="client-chip">Amedia</div>
+      <div class="client-chip">Amgen</div>
+      <div class="client-chip">Beko</div>
+      <div class="client-chip">Bosco</div>
+      <div class="client-chip">Bunge</div>
+      <div class="client-chip">DeLaval</div>
+      <div class="client-chip">English First</div>
+      <div class="client-chip">Havi Logistics</div>
+      <div class="client-chip">Innova</div>
+      <div class="client-chip">Knauf</div>
+      <div class="client-chip">Merz</div>
+      <div class="client-chip">NCR</div>
+      <div class="client-chip">Phonak</div>
+      <div class="client-chip">Selgros</div>
+      <div class="client-chip">Tele2</div>
+      <div class="client-chip">Travelport</div>
+      <div class="client-chip">Unilever</div>
+      <div class="client-chip">Альфа-Банк</div>
+      <div class="client-chip">Аскона</div>
+      <div class="client-chip">ВГТРК</div>
+      <div class="client-chip">Государственная Дума</div>
+      <div class="client-chip">М.Видео</div>
+      <div class="client-chip">Медси</div>
+      <div class="client-chip">ОМПК</div>
+      <div class="client-chip">Почта России</div>
+      <div class="client-chip">РЖД</div>
+      <div class="client-chip">Россельхозбанк</div>
+      <div class="client-chip">Sports.ru</div>
+      <div class="client-chip">Северсталь</div>
+      <!-- duplicate for seamless loop -->
+      <div class="client-chip">A1</div>
+      <div class="client-chip">Аэроэкспресс</div>
+      <div class="client-chip">Amedia</div>
+      <div class="client-chip">Amgen</div>
+      <div class="client-chip">Beko</div>
+      <div class="client-chip">Bosco</div>
+      <div class="client-chip">Bunge</div>
+      <div class="client-chip">DeLaval</div>
+      <div class="client-chip">English First</div>
+      <div class="client-chip">Havi Logistics</div>
+      <div class="client-chip">Innova</div>
+      <div class="client-chip">Knauf</div>
+      <div class="client-chip">Merz</div>
+      <div class="client-chip">NCR</div>
+      <div class="client-chip">Phonak</div>
+      <div class="client-chip">Selgros</div>
+      <div class="client-chip">Tele2</div>
+      <div class="client-chip">Travelport</div>
+      <div class="client-chip">Unilever</div>
+      <div class="client-chip">Альфа-Банк</div>
+      <div class="client-chip">Аскона</div>
+      <div class="client-chip">ВГТРК</div>
+      <div class="client-chip">Государственная Дума</div>
+      <div class="client-chip">М.Видео</div>
+      <div class="client-chip">Медси</div>
+      <div class="client-chip">ОМПК</div>
+      <div class="client-chip">Почта России</div>
+      <div class="client-chip">РЖД</div>
+      <div class="client-chip">Россельхозбанк</div>
+      <div class="client-chip">Sports.ru</div>
+      <div class="client-chip">Северсталь</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA + FORM -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <div class="section-label" style="color:var(--accent2)">Свяжитесь с нами</div>
+        <h2>Получите бесплатную консультацию</h2>
+        <p>Наш специалист свяжется с вами в ближайшее время и ответит на все вопросы по подходящему решению.</p>
+      </div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="form-group">
+            <label>ФИО *</label>
+            <input type="text" placeholder="Иванов Иван Иванович">
+          </div>
+          <div class="form-group">
+            <label>Компания *</label>
+            <input type="text" placeholder="ООО «Название»">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Должность *</label>
+            <input type="text" placeholder="ИТ-директор">
+          </div>
+          <div class="form-group">
+            <label>Телефон *</label>
+            <input type="tel" placeholder="+7 (___) ___-__-__">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="email@company.ru">
+        </div>
+        <div class="form-group">
+          <label>Интересующее решение *</label>
+          <select>
+            <option value="">— Выберите —</option>
+            <option>Вычислительные платформы</option>
+            <option>Системы хранения данных</option>
+            <option>Сети и передача данных</option>
+            <option>Инженерная инфраструктура</option>
+            <option>Управление ИТ-инфраструктурой</option>
+            <option>Информационная безопасность</option>
+            <option>Поставка оборудования</option>
+            <option>Другое</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Комментарий</label>
+          <textarea placeholder="Опишите вашу задачу..."></textarea>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" id="agree" checked>
+          <label for="agree">Я согласен с <a href="#">условиями обработки персональных данных</a></label>
+        </div>
+        <button class="btn-submit" onclick="submitForm(this)">Отправить заявку</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="font-size:18px;margin-bottom:12px;display:inline-flex">
+          <div class="logo-dot"></div>
+          Platformix<span>New</span>
+        </a>
+        <p>Системный интегратор, специализирующийся на создании надёжной ИТ-инфраструктуры для предприятий с 1992 года.</p>
+        <div class="footer-social">
+          <a href="https://vk.com/platformix" target="_blank">ВКонтакте ↗</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>ИТ-инфраструктура</h4>
+        <a href="#">Вычислительные платформы</a>
+        <a href="#">Системы хранения данных</a>
+        <a href="#">Сетевые решения</a>
+        <a href="#">Инженерные системы</a>
+        <a href="#">Физическая безопасность</a>
+        <a href="#">Управление инфраструктурой</a>
+        <a href="#">Информационная безопасность</a>
+      </div>
+      <div class="footer-col">
+        <h4>Услуги</h4>
+        <a href="#">Прокьюремент</a>
+        <a href="#">Комплексное обслуживание</a>
+        <a href="#">Финансовые услуги</a>
+        <a href="#">Центр экспертизы</a>
+      </div>
+      <div class="footer-col">
+        <h4>О компании</h4>
+        <a href="#">О компании</a>
+        <a href="#">История</a>
+        <a href="#">Партнёры</a>
+        <a href="#">Карьера</a>
+        <a href="#">Контакты</a>
+        <a href="#">Реквизиты</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <a href="mailto:info@platformixnew.ru">info@platformixnew.ru</a>
+        <a href="#">Москва, Россия</a>
+        <a href="#cta">Оставить заявку</a>
+        <a href="#">Обратная связь</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© ООО «PlatformixNew», 2006–2026</span>
+      <div style="display:flex;gap:24px">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Использование Cookie</a>
+        <a href="#">Корпоративная информация</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- COOKIE BAR -->
+<div class="cookie-bar" id="cookieBar">
+  <span>Мы используем cookie-файлы для персонализации контента и улучшения пользовательского опыта. Подробнее в <a href="#">Политике использования cookie</a>.</span>
+  <button class="btn-cookie" onclick="document.getElementById('cookieBar').classList.add('hidden')">Принимаю</button>
+</div>
+
+<script>
+  // ── TABS ──
+  function showTab(id, el) {
+    document.querySelectorAll('.stats-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.stats-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    el.classList.add('active');
+  }
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── BURGER ──
+  document.getElementById('burgerBtn').addEventListener('click', () => {
+    const nav = document.querySelector('nav');
+    if (nav.style.display === 'flex') {
+      nav.style.display = 'none';
+    } else {
+      nav.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:var(--primary);padding:12px 0;z-index:99';
+    }
+  });
+
+  // ── FORM SUBMIT ──
+  function submitForm(btn) {
+    btn.textContent = '✓ Заявка отправлена!';
+    btn.style.background = '#00C8A0';
+    setTimeout(() => {
+      btn.textContent = 'Отправить заявку';
+      btn.style.background = '';
+    }, 3000);
+  }
+
+  // ── STAGGER REVEALS ──
+  document.querySelectorAll('.services-grid .reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i * 60) + 'ms';
+  });
+  document.querySelectorAll('.adv-grid .reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i * 80) + 'ms';
+  });
+</script>
+</body>
+</html>
